@@ -4,7 +4,7 @@ draft = true
 title = 'Pfsense en alta disponibilidad'
 +++
 
-# pfsense-alta-disponibilidad
+# pfsense alta disponibilidad
 Proyecto de fin de grado
 
 ## Escenario 
