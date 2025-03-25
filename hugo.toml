@@ -1,6 +1,6 @@
 baseurl = "https://username.github.io"
-DefaultContentLanguage = "en"
-title = "Beautiful Hugo"
+DefaultContentLanguage = "es"
+title = "El blog de un mero informático"
 # Using theme as git submodule
 theme = "beautifulhugo"
 # Or when using theme as hugo module
@@ -20,7 +20,7 @@ pygmentsCodefencesGuessSyntax = true
 
 [Params]
 #  homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
-  subtitle = "Build a beautiful and simple website in minutes"
+  subtitle = "José Miguel Calderón Frutos"
   mainSections = ["post","posts"]
   logo = "img/avatar-icon.png" # Expecting square dimensions
   favicon = "img/favicon.ico"
@@ -53,38 +53,38 @@ pygmentsCodefencesGuessSyntax = true
 
 [Params.author]
   # Set only your "username" for default hosts and full URLs otherwise (e.g., "https://MyGitLab.org/username")
-  name = "Some Person"
-  website = "yourwebsite.com"
-  email = "youremail@domain.com"
-  facebook = "username"
-  github = "username"
-  gitlab = "username"
-  bitbucket = "username"
-  twitter = "username"
-  reddit = "username"
-  linkedin = "username"
-  xing = "username"
-  stackoverflow = "users/XXXXXXX/username"
-  snapchat = "username"
-  instagram = "username"
-  youtube = "user/username" # or channel/channelname
-  soundcloud = "username"
-  spotify = "username"
-  bandcamp = "username"
-  itchio = "username"
-  vk = "username"
-  paypal = "username"
-  telegram = "username"
-  500px = "username"
-  codepen = "username"
-  mastodon = "url"
-  kaggle = "username"
-  weibo = "username"
-  slack = "username"
-  medium = "username"
-  discord = "invite code (https://discord.gg/XXXXXXX)"
-  strava = "userid"
-  lastfm = "username"
+  name = "José Miguel Calderón Frutos"
+  github = "https://github.com/jose20035"
+  linkedin = "https://www.linkedin.com/in/jose-miguel-calderon-frutos/"
+  #website = "yourwebsite.com"
+  #email = "youremail@domain.com"
+# facebook = "username"
+#  gitlab = "username"
+#  bitbucket = "username"
+#  twitter = "username"
+#  reddit = "username"
+#  xing = "username"
+#  stackoverflow = "users/XXXXXXX/username"
+#  snapchat = "username"
+#  instagram = "username"
+#  youtube = "user/username" # or channel/channelname
+#  soundcloud = "username"
+#  spotify = "username"
+#  bandcamp = "username"
+#  itchio = "username"
+#  vk = "username"
+#  paypal = "username"
+#  telegram = "username"
+#  500px = "username"
+#  codepen = "username"
+#  mastodon = "url"
+#  kaggle = "username"
+#  weibo = "username"
+#  slack = "username"
+#  medium = "username"
+#  discord = "invite code (https://discord.gg/XXXXXXX)"
+#  strava = "userid"
+#  lastfm = "username"
 
 [[menu.main]]
     name = "Blog"
