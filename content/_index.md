@@ -1,2 +1,4 @@
-## Front Page Content
-`beautifulhugo` supports content on your front page. Edit `/content/_index.md` to change what appears here. Delete `/content/_index.md` if you don't want any content here.
+## Introducción 
+Saludos a todos, en primer lugar este es un blog personal en el que encontrareis artículos relacionados con el mundo de la informática.
+
+Espero que en los siguientes artículos sean de utilidad y ire añadiendo artículos conforme vaya realizando proyectos personal
