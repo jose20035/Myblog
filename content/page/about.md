@@ -1,10 +1,10 @@
 ---
 title: About me
-subtitle: ¿Quien soy y que esperiencia tengo?
+subtitle: ¿Quién soy y que experiencia tengo?
 comments: false
 ---
 
-Mi nombre es José Miguel Calderón Frutos y actual mente trabajo como Sysadmin para la compañía de seguros Admiral.
+Mi nombre es José Miguel Calderón Frutos y actualmente trabajo como Sysadmin para la compañía de seguros Admiral.
 Soy un simple informático que quiere aportar su granito de arena a la comunidad documentando sus proyectos personales.
 Entre mis habilidades se encuentran:
 * Automatización
@@ -13,7 +13,7 @@ Entre mis habilidades se encuentran:
   * Ansible
 * Cloud
   * Conocimiento sobre AWS (EC2, S3, CloudFormation, EKS, DynamoDB & Lambda)
-* Tecnologías de virtualisation
+* Tecnologías de virtualización 
   * VMware
   * Kvm
 * Manejo de Bases de Datos
