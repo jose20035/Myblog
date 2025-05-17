@@ -35,7 +35,46 @@ Tendrá un direccionamiento de 10.10.20.0/24 y no tendrá habilitado el dhcp pue
 Esta red es una red necesaria para configurar pfsense en alta disponibilidad.
 Tendrá un direccionamiento de 10.10.0.0/24 y no tendrá habilitado el dhcp.
 
-Todas estas redes estan definidas por medio de xml el cual se encuentra en el repositorio de github.
+Todas estas redes están definidas por medio de los siguientes xml.
+
+* exter.xml
+
+```xml
+<network>
+  <name>exter</name>
+  <uuid>0c0a78e2-e74b-4c57-952d-ea87da79ee34</uuid>
+  <bridge name='virbr19' stp='on' delay='0'/>
+  <mac address='52:54:00:a6:16:16'/>
+  <ip address='10.10.10.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+```
+
+* intra.xml
+
+```xml
+<network>
+  <name>intra</name>
+  <uuid>4f327ba5-e5d7-4291-aba5-e5aaa2e6b1cc</uuid>
+  <bridge name='virbr20' stp='on' delay='0'/>
+  <mac address='52:54:00:a6:06:16'/>
+  <ip address='10.10.20.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+```
+
+* net-pfsense.xml
+
+```xml
+<network>
+  <name>net-pfsense</name>
+  <uuid>1d616456-4bb4-4fb1-8f6d-43637ad17328</uuid>
+  <bridge name='virbr18' stp='on' delay='0'/>
+  <mac address='52:54:00:a6:16:09'/>
+  <ip address='10.10.0.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+```
 
 ### maquinas
 
@@ -47,12 +86,60 @@ virt-builder debian-10 --hostname db --format qcow2 --root-password password:roo
 virt-builder debian-10 --hostname web --format qcow2 --root-password password:root --size 10G -o web.qcow2
 ```
 
-Y las definiremos con los xml que se encuentran en el repositorio de github.
+Y las definiremos con los siguientes xml.
 
+* web.xml
+
+``` xml
+<domain type="kvm">
+  <name>web</name>
+  <memory unit="G">1</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <devices>
+    <emulator>/usr/bin/kvm</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/home/jose/MVs/kvm/images/web.qcow2'/>
+      <target dev='vda'/>
+    </disk>
+    <interface type="network">
+      <source network="exter"/>
+      <mac address="52:54:00:86:c6:a9"/>
+    </interface>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' />
+  </devices>
+</domain>
 ```
-define web.xml
 
-define db.xml
+* db.xml
+
+``` xml
+<domain type="kvm">
+  <name>db</name>
+  <memory unit="G">1</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <devices>
+    <emulator>/usr/bin/kvm</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/home/jose/MVs/kvm/images/db.qcow2'/>
+      <target dev='vda'/>
+    </disk>
+    <interface type="network">
+      <source network="intra"/>
+      <mac address="52:54:00:86:36:a9"/>
+    </interface>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' />
+  </devices>
+</domain>
 ```
 
 ### instalación de pfsense
