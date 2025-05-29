@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>El blog de un mero informático</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on El blog de un mero informático</description>
+    <generator>Hugo</generator>
+    <language>es</language>
+    <lastBuildDate>Sat, 01 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pfsense-alta-disponibilidad</title>
+      <link>http://localhost:1313/post/2025-03-01-pfsense-alta-disponivilidad/</link>
+      <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/2025-03-01-pfsense-alta-disponivilidad/</guid>
+      <description>&lt;h2 id=&#34;escenario&#34;&gt;Escenario&lt;/h2&gt;&#xA;&lt;p&gt;Voy a realizar un escenario desplegado en libviert el cual estará compuesto por 4 maquinas las cuales dos serán pfsense y las otras dos serán Debían las cuales usaremos para realizar pruebas.&lt;/p&gt;&#xA;&lt;h3 id=&#34;redes&#34;&gt;Redes&lt;/h3&gt;&#xA;&lt;p&gt;Lo primero que configuraremos en Libvirt serán las redes.&lt;/p&gt;&#xA;&lt;p&gt;En principio crearemos un total de 4 redes.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;default&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;La red por defecto es la red que tiene un nat hacia mi tarjeta de red real de mi maquina.&#xA;Es la red que usaremos para simular la salida a internet.&#xA;Tendrá un direccionamiento de 192.168.122.0/24 y sera la única red que tenga activado el dhcp.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About me</title>
+      <link>http://localhost:1313/page/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/page/about/</guid>
+      <description>&lt;p&gt;Mi nombre es José Miguel Calderón Frutos y actualmente trabajo como Sysadmin para la compañía de seguros Admiral.&#xA;Soy un simple informático que quiere aportar su granito de arena a la comunidad documentando sus proyectos personales.&#xA;Entre mis habilidades se encuentran:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Automatización&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Conocimiento sobre scripting&lt;/li&gt;&#xA;&lt;li&gt;Python&lt;/li&gt;&#xA;&lt;li&gt;Ansible&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;Cloud&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Conocimiento sobre AWS (EC2, S3, CloudFormation, EKS, DynamoDB &amp;amp; Lambda)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;Tecnologías de virtualización&#xA;&lt;ul&gt;&#xA;&lt;li&gt;VMware&lt;/li&gt;&#xA;&lt;li&gt;Kvm&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;Manejo de Bases de Datos&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Oracle&lt;/li&gt;&#xA;&lt;li&gt;Postgres&lt;/li&gt;&#xA;&lt;li&gt;MariaDB&lt;/li&gt;&#xA;&lt;li&gt;MongoDB&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Espero que mi trabajo se de utilidad y si desea contactarme podeis hacerlo mediante mi &lt;a href=&#34;https://www.linkedin.com/in/jose-miguel-calderon-frutos/&#34;&gt;linkedin&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,720 @@
+
+
+<!DOCTYPE html>
+<html lang="es" itemscope itemtype="http://schema.org/WebPage">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>pfsense-alta-disponibilidad - </title>
+
+  <meta name="description" content="Proyecto de fin de grado">
+  <meta name="author" content="José Miguel Calderón Frutos"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "El blog de un mero informático",
+    
+    "url": "http:\/\/localhost:1313\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "http:\/\/localhost:1313\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "http:\/\/localhost:1313\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "http:\/\/localhost:1313\/post\/2025-03-01-pfsense-alta-disponivilidad\/",
+          "name": "Pfsense alta disponibilidad"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "José Miguel Calderón Frutos"
+  },
+  "headline": "pfsense-alta-disponibilidad",
+  "description" : "Escenario Voy a realizar un escenario desplegado en libviert el cual estará compuesto por 4 maquinas las cuales dos serán pfsense y las otras dos serán Debían las cuales usaremos para realizar pruebas.\nRedes Lo primero que configuraremos en Libvirt serán las redes.\nEn principio crearemos un total de 4 redes.\ndefault La red por defecto es la red que tiene un nat hacia mi tarjeta de red real de mi maquina. Es la red que usaremos para simular la salida a internet. Tendrá un direccionamiento de 192.168.122.0\/24 y sera la única red que tenga activado el dhcp.\n",
+  "inLanguage" : "es",
+  "wordCount":  1673 ,
+  "datePublished" : "2025-03-01T00:00:00\u002b00:00",
+  "dateModified" : "2025-03-01T00:00:00\u002b00:00",
+  "image" : "http:\/\/localhost:1313\/img\/avatar-icon-jose.png",
+  "keywords" : [ "example, markdown" ],
+  "mainEntityOfPage" : "http:\/\/localhost:1313\/post\/2025-03-01-pfsense-alta-disponivilidad\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "http:\/\/localhost:1313\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "http:\/\/localhost:1313\/img\/avatar-icon-jose.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="pfsense-alta-disponibilidad" />
+<meta property="og:description" content="Proyecto de fin de grado">
+<meta property="og:image" content="http://localhost:1313/img/avatar-icon-jose.png" />
+<meta property="og:url" content="http://localhost:1313/post/2025-03-01-pfsense-alta-disponivilidad/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="El blog de un mero informático" />
+
+  <meta name="twitter:title" content="pfsense-alta-disponibilidad" />
+  <meta name="twitter:description" content="Proyecto de fin de grado">
+  <meta name="twitter:image" content="http://localhost:1313/img/avatar-icon-jose.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='http://localhost:1313/img/favicon-jose.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.3">
+  <link rel="alternate" href="http://localhost:1313/index.xml" type="application/rss+xml" title="El blog de un mero informático"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="http://localhost:1313/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://localhost:1313/css/highlight.min.css" /><link rel="stylesheet" href="http://localhost:1313/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Conmuta navegación</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://localhost:1313/">El blog de un mero informático</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="El blog de un mero informático" href="http://localhost:1313/">
+            <img class="avatar-img" src="http://localhost:1313/img/avatar-icon-jose.png" alt="El blog de un mero informático" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>pfsense-alta-disponibilidad</h1>
+              
+              
+              
+                
+                  <h2 class="post-subheading">Proyecto de fin de grado</h2>
+                
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Publicado el March 1, 2025
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;8&nbsp;minutos
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1673&nbsp;palabras
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;José Miguel Calderón Frutos
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <h2 id="escenario">Escenario</h2>
+<p>Voy a realizar un escenario desplegado en libviert el cual estará compuesto por 4 maquinas las cuales dos serán pfsense y las otras dos serán Debían las cuales usaremos para realizar pruebas.</p>
+<h3 id="redes">Redes</h3>
+<p>Lo primero que configuraremos en Libvirt serán las redes.</p>
+<p>En principio crearemos un total de 4 redes.</p>
+<ol>
+<li>default</li>
+</ol>
+<p>La red por defecto es la red que tiene un nat hacia mi tarjeta de red real de mi maquina.
+Es la red que usaremos para simular la salida a internet.
+Tendrá un direccionamiento de 192.168.122.0/24 y sera la única red que tenga activado el dhcp.</p>
+<ol start="2">
+<li>exter</li>
+</ol>
+<p>Es la red extermina de nuestra lan como su propio nombre indica, sera la red que albergue uno de los servidores de debían simulando un fromten.
+Tendrá un direccionamiento de 10.10.10.0/24 y no tendrá habilitado el dhcp puesto que de eso se encargar los servidores de pfsense.</p>
+<ol start="3">
+<li>intra</li>
+</ol>
+<p>Es la red interna de nuestra lan, sera la red que albergue uno de los servidores de debían simulando un backend.
+Tendrá un direccionamiento de 10.10.20.0/24 y no tendrá habilitado el dhcp puesto que de eso se encargar los servidores de pfsense.</p>
+<ol start="4">
+<li>net-pfsense</li>
+</ol>
+<p>Esta red es una red necesaria para configurar pfsense en alta disponibilidad.
+Tendrá un direccionamiento de 10.10.0.0/24 y no tendrá habilitado el dhcp.</p>
+<p>Todas estas redes están definidas por medio de los siguientes xml.</p>
+<ul>
+<li>exter.xml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;network&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;name&gt;</span>exter<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uuid&gt;</span>0c0a78e2-e74b-4c57-952d-ea87da79ee34<span class="nt">&lt;/uuid&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;bridge</span> <span class="na">name=</span><span class="s">&#39;virbr19&#39;</span> <span class="na">stp=</span><span class="s">&#39;on&#39;</span> <span class="na">delay=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#39;52:54:00:a6:16:16&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;ip</span> <span class="na">address=</span><span class="s">&#39;10.10.10.1&#39;</span> <span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/ip&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/network&gt;</span>
+</span></span></code></pre></div><ul>
+<li>intra.xml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;network&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;name&gt;</span>intra<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uuid&gt;</span>4f327ba5-e5d7-4291-aba5-e5aaa2e6b1cc<span class="nt">&lt;/uuid&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;bridge</span> <span class="na">name=</span><span class="s">&#39;virbr20&#39;</span> <span class="na">stp=</span><span class="s">&#39;on&#39;</span> <span class="na">delay=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#39;52:54:00:a6:06:16&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;ip</span> <span class="na">address=</span><span class="s">&#39;10.10.20.1&#39;</span> <span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/ip&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/network&gt;</span>
+</span></span></code></pre></div><ul>
+<li>net-pfsense.xml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;network&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;name&gt;</span>net-pfsense<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uuid&gt;</span>1d616456-4bb4-4fb1-8f6d-43637ad17328<span class="nt">&lt;/uuid&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;bridge</span> <span class="na">name=</span><span class="s">&#39;virbr18&#39;</span> <span class="na">stp=</span><span class="s">&#39;on&#39;</span> <span class="na">delay=</span><span class="s">&#39;0&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#39;52:54:00:a6:16:09&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;ip</span> <span class="na">address=</span><span class="s">&#39;10.10.0.1&#39;</span> <span class="na">netmask=</span><span class="s">&#39;255.255.255.0&#39;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/ip&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/network&gt;</span>
+</span></span></code></pre></div><h3 id="maquinas">maquinas</h3>
+<p>Primero crearemos las dos maquinas debían, para ello utilizaremos la herramienta <strong>virt-builder</strong> para crear la imagen y luego los xml para definir las maquinas.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">virt-builder debian-10 --hostname db --format qcow2 --root-password password:root --size 10G -o db.qcow2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">virt-builder debian-10 --hostname web --format qcow2 --root-password password:root --size 10G -o web.qcow2
+</span></span></code></pre></div><p>Y las definiremos con los siguientes xml.</p>
+<ul>
+<li>web.xml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;domain</span> <span class="na">type=</span><span class="s">&#34;kvm&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;name&gt;</span>web<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;memory</span> <span class="na">unit=</span><span class="s">&#34;G&#34;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/memory&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;vcpu&gt;</span>1<span class="nt">&lt;/vcpu&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;os&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;type</span> <span class="na">arch=</span><span class="s">&#34;x86_64&#34;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;boot</span> <span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/os&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;devices&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;emulator&gt;</span>/usr/bin/kvm<span class="nt">&lt;/emulator&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;file&#39;</span> <span class="na">device=</span><span class="s">&#39;disk&#39;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;qcow2&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;source</span> <span class="na">file=</span><span class="s">&#39;/home/jose/MVs/kvm/images/web.qcow2&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;vda&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/disk&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;interface</span> <span class="na">type=</span><span class="s">&#34;network&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;source</span> <span class="na">network=</span><span class="s">&#34;exter&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#34;52:54:00:86:c6:a9&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/interface&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;graphics</span> <span class="na">type=</span><span class="s">&#39;vnc&#39;</span> <span class="na">port=</span><span class="s">&#39;-1&#39;</span> <span class="na">autoport=</span><span class="s">&#39;yes&#39;</span> <span class="na">listen=</span><span class="s">&#39;0.0.0.0&#39;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/devices&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/domain&gt;</span>
+</span></span></code></pre></div><ul>
+<li>db.xml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;domain</span> <span class="na">type=</span><span class="s">&#34;kvm&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;name&gt;</span>db<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;memory</span> <span class="na">unit=</span><span class="s">&#34;G&#34;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/memory&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;vcpu&gt;</span>1<span class="nt">&lt;/vcpu&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;os&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;type</span> <span class="na">arch=</span><span class="s">&#34;x86_64&#34;</span><span class="nt">&gt;</span>hvm<span class="nt">&lt;/type&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;boot</span> <span class="na">dev=</span><span class="s">&#39;hd&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/os&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;devices&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;emulator&gt;</span>/usr/bin/kvm<span class="nt">&lt;/emulator&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;disk</span> <span class="na">type=</span><span class="s">&#39;file&#39;</span> <span class="na">device=</span><span class="s">&#39;disk&#39;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&#39;qemu&#39;</span> <span class="na">type=</span><span class="s">&#39;qcow2&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;source</span> <span class="na">file=</span><span class="s">&#39;/home/jose/MVs/kvm/images/db.qcow2&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;target</span> <span class="na">dev=</span><span class="s">&#39;vda&#39;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/disk&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;interface</span> <span class="na">type=</span><span class="s">&#34;network&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;source</span> <span class="na">network=</span><span class="s">&#34;intra&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;mac</span> <span class="na">address=</span><span class="s">&#34;52:54:00:86:36:a9&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/interface&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;graphics</span> <span class="na">type=</span><span class="s">&#39;vnc&#39;</span> <span class="na">port=</span><span class="s">&#39;-1&#39;</span> <span class="na">autoport=</span><span class="s">&#39;yes&#39;</span> <span class="na">listen=</span><span class="s">&#39;0.0.0.0&#39;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/devices&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/domain&gt;</span>
+</span></span></code></pre></div><h3 id="instalación-de-pfsense">instalación de pfsense</h3>
+<p>Para la instalación de pfsense, he utilizado la herrmienta de libvier <strong>virt-install</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Pfsense master
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">virt-install --connect qemu:///system --cdrom ~/Iso/pfSense-CE-2.5.0-RELEASE-amd64.iso --disk size=10,pool=&#34;MVs&#34; --network network=default --network network=exter --network network=intra --network network=net-pfsense --name pfsense-master --memory 1024 --vcpus 1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Pfsense slave
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">virt-install --connect qemu:///system --cdrom ~/Iso/pfSense-CE-2.5.0-RELEASE-amd64.iso --disk size=10,pool=&#34;MVs&#34; --network network=default --network network=exter --network network=intra --network network=net-pfsense --name pfsense-slave --memory 1024 --vcpus 1
+</span></span></code></pre></div><p>Tras ejecutar esto nos abrira una ventana con el instalador de pfsense en el primer paso pulsaremos en install</p>
+<p><img src="/img/pfsense/install/install_1.png" alt="install_1"></p>
+<p>Luego nos pedira el idioma del teclado, buscaremos spanish y probaremos las teclas en test keymap si todo esta correcto pulsaremos continuar.</p>
+<p><img src="/img/pfsense/install/install_2.png" alt="install_2"></p>
+<p><img src="/img/pfsense/install/install_3.png" alt="install_3"></p>
+<p>Despues nos pedira que configuremos las particiones, aqui tenemos varias opciones, tenemos las opciones de auto particionado tanto para bios como para uefi la creara unicamente un particion / en el systema de archivos ufs y una linux swap.</p>
+<p><img src="/img/pfsense/install/install_4_1.png" alt="install_4_1"></p>
+<p>Pero tambine tenemos la opción de auto zsh la cual creara el mismo esquema de particiones pero con el sistema de archivos zfs el cual es mucho mas potente y nos ofrece nuevas configuraciones como la de crear raid.</p>
+<p><img src="/img/pfsense/install/install_4.png" alt="install_4"></p>
+<p>Por ultimo y no menos importante siempre podremos entrar en una configuración manual de las particiones.</p>
+<p><img src="/img/pfsense/install/install_5.png" alt="install_5"></p>
+<p>Una vez configurado todo esto pararemos a la instalación, una de las cosas que mas me ha sorprendido de pfsense es que se instala en menos de 5 minutos puesto que es un software que pesar de tener muchas funcionalidades es muy liviano.</p>
+<p>Tras la instalación nos encontraremos con una pestaña la cual nos pedirá reiniciar o nos ofrecerá un shell para poder configurar cualquier detalle a mano.</p>
+<p><img src="/img/pfsense/install/install_6.png" alt="install_6"></p>
+<p>Tras reiniciar nos encontraremos que automáticamente a configurado la primera red como WAN y la segunda como Lan.
+Esto es un problema puesto que desde la Wan no tenemos reglas creadas para poder acceder a la web de pfsense donde terminaremos la configuración.</p>
+<p>Por lo que tendremos que crear dos nuevas reglas en el firewall en la red de wan.</p>
+<p><img src="/img/pfsense/install/install_13.png" alt="install_13"></p>
+<p>Para ello seleccionaremos la opción 8 y entraremos en la shell de pfsense.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">easyrule pass wan tcp any any 80
+</span></span><span class="line"><span class="cl">easyrule pass wan tcp any any 443
+</span></span></code></pre></div><p>Una vez creadas estas reglas podremos acceder a la pagina de configuración de pfsense.</p>
+<p>Lo primero que encontramos es una bienvenida y algunas políticas.
+pulsaremos siguiente y seguiremos.</p>
+<p><img src="/img/pfsense/install/install_7.png" alt="install_7"></p>
+<p>Aquí configuraremos el nombre y el dominio.</p>
+<p><img src="/img/pfsense/install/install_8.png" alt="install_8"></p>
+<p>Luego configuraremos el servidor de hora.</p>
+<p><img src="/img/pfsense/install/install_9.png" alt="install_9"></p>
+<p>Después podremos configurar la interfaz wan, nosotros la dejaremos por defecto.</p>
+<p><img src="/img/pfsense/install/install_10.png" alt="install_10"></p>
+<p>Por ultimo nos pedirá que cambiemos la contraseña del administrador puesto que por defecto es &ldquo;pfsense&rdquo;.</p>
+<p><img src="/img/pfsense/install/install_11.png" alt="install_11"></p>
+<p>Aquí tendremos un resumen de la instalación y si queremos buscar alguna actualización, tras esto el pfsense se reiniciara de nuevo y ya tendremos instalado nuestro primer pfsense.</p>
+<p><img src="/img/pfsense/install/install_12.png" alt="install_12"></p>
+<p>Recordemos que para configurar lo en alta disponibilidad necesitaremos como mínimo otro mas.</p>
+<h2 id="configuración-de-pfsense">Configuración de pfsense</h2>
+<h3 id="configuración-de-las-interfaces">Configuración de las interfaces</h3>
+<p>Por defecto en principio solo se abra configurado la red wan y una de las primeras redes, por lo que tendremos que añadir mas.</p>
+<p>Para ello iremos a la pestaña InterfacesInterface / Assignments y añadiremos todas las interfaces.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_1.png" alt="Config_1"></p>
+<p>Tras guardarlas iremos a configurarlas 1 a 1 en la pestaña interfaces.</p>
+<p>La primera sera la wan la cual la cambiaremos la dirección del dhcp por una ip statica y añadiremos en la pestaña <em>ipv4 address</em> la direción que le corresponda.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_2.png" alt="Config_2"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_2_1.png" alt="Config_2_1"></p>
+<p>Luego en las demás interfaces realizaremos los mismos cambios con sus respectivas ips.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_3.png" alt="Config_3"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_3_1.png" alt="Config_3"></p>
+<p>Las interfaces deben quedar asi configuradas.</p>
+<ul>
+<li>Maestro</li>
+</ul>
+<p><img src="/img/pfsense/Config_alta_dispo/extra1.png" alt="extra1"></p>
+<ul>
+<li>Esclavo</li>
+</ul>
+<p><img src="/img/pfsense/Config_alta_dispo/extra2.png" alt="extra2"></p>
+<h3 id="configuración-de-high-availability-sync">Configuración de High Availability Sync</h3>
+<p>Lo primero que haremos es ir al cortafuegos y habilitar el trafico en la red que usaran exclusivamente los pfsense.</p>
+<p>En mi caso esa sera la tercera red (Pfsync)</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_4.png" alt="Config_4"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_4_1.png" alt="Config_4_1"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_4_2.png" alt="Config_4_2"></p>
+<p>Tras permitir todo el trafico en la red lo siguiente que haremos sera ver que tenemos ping entre la maquina para ello utilizaremos una utilizada de la pagina para realizar los ping, la encontraremos en Diagnostics / ping.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_5_1.png" alt="Config_5_1"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_5_2.png" alt="Config_5_2"></p>
+<p>Después de comprobar la conexión primero iremos al servidor maestro y realizaremos los siguientes cambios.</p>
+<p>Iremos a systema / High Availability Sync</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_7_1.png" alt="Config_7_1"></p>
+<p>Marcaremos la casilla de <em>Synchronize states</em>, en <em>Synchronize Interface</em> añadiremos la interfaz que van a realizar la sincronizaron y en <em>pfsync Synchronize Peer IP</em> la ip de la maquina esclava.</p>
+<p>Seguidamente en <em>Synchronize Config to IP</em> añadiremos de nuevo la ip de la maquina esclava, y en <em>Remote System</em> las credenciales de una cuenta administradora de la maquina escava.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_7_2.png" alt="Config_7_2"></p>
+<p>Por ultimo seleccionaremos los servicios que se sincronizaran, en mi caso he seleccionado todos.</p>
+<p>Tras guardad esta configuración iremos a el servidor esclavo a hacer una configuración similar.</p>
+<p>Iremos a la misma pestaña systema / High Availability Sync</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_8.png" alt="Config_8"></p>
+<p>y configuraremos los dos primeros campos igual que el maestro y en <em>pfsync Synchronize Peer IP</em> pondremos la ip del maestro.</p>
+<p>Tras eso guardaremos y ya deberíamos tener sincronizado los pfsense.</p>
+<p><strong>Importante</strong>: Puede que tengas errores en la sincronización si algún pfsense no tiene la misma versión que el resto o no utilice el mismo puerto para la interfaz web.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_10.png" alt="Config_10"></p>
+<p>Recomiendo actualizar los dos pfsense antes de la sincronización</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_6.png" alt="Config_6"></p>
+<p>Recomiendo que todos estén configurado por https antes de la sincronización</p>
+<h3 id="configuración-de-ip-virtuales">Configuración de Ip Virtuales.</h3>
+<p>Lo siguiente que haremos sera crear ips virtuales para cuando el servidor maestro o el esclavo se caigan no tener que esperar que los clientes cambien de ip.</p>
+<p>Para ello nos iremos en el pfsense maestro a Firewall/Virtual IPs y crearemos la ip virtual de la red wan.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_9_1.png" alt="Config_9_1"></p>
+<p>El tipo de ip seleccionaremos para que utilicé el protocolo CARP, en address añadiremos la ip que vamos a crear, y en virtual ip password pondremos una contraseña.</p>
+<p>Realizaremos esto tanto con la externa como con la interna.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_9_2.png" alt="Config_9_2"></p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_9_3.png" alt="Config_9_3"></p>
+<p>Tras realizar esta configuración en el pfsense maestro podemos probar la configuración de la alta disponibilidad puesto que devenían haberse creado las mismas ips virtuales en el pfsense esclavo.</p>
+<p><img src="/img/pfsense/Config_alta_dispo/Config_9_4.png" alt="Config_9_4"></p>
+<p>Tras comprobar esto ya tendremos configurado las virtual ip</p>
+<h3 id="configuración-del-dhcp">Configuración del dhcp</h3>
+<p>Para configura el dhcp iremos a Services/DHCP Server y ahi realizaremos la siguiente configuración con las redes interna y externa.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_1.png" alt="Config_1"></p>
+<p>Marcaremos la señal de enable para activar el servidor dhcp, y configuraremos el rango de ips que queremos que reparta.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_2.png" alt="Config_2"></p>
+<p>Después configuraremos el DNs</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_3.png" alt="Config_3"></p>
+<p>Y la puerta de enlace que sera la ip virtual que hemos creado para la red externa.</p>
+<p>Por ultimo también configuraremos la red interna igual que la externa.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_4.png" alt="Config_4"></p>
+<p><img src="/img/pfsense/Config_dhcp/Config_5.png" alt="Config_5"></p>
+<p><img src="/img/pfsense/Config_dhcp/Config_6.png" alt="Config_6"></p>
+<h3 id="configuración-del-snat">Configuración del SNat</h3>
+<p>Tras configurar el DHCP tendremos que configura el Snat para que los clientes de las redes externas y internas puedan salir a internet.</p>
+<p>Para ello iremos a Firewall/NAT/Outbound y crearemos una nueva regla.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_7_1.png" alt="Config_7_1"></p>
+<p>La interfaz sera la wan, la red de la que viene la redireción en este caso 10.10.10.0/24</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_7_2.png" alt="Config_7_2"></p>
+<p>y tendremos que poner la interfaz de salida la cual es importante que sea la ip virtual que creamos antes.</p>
+<p>Luego haremos lo mismo con la red interna.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_8_1.png" alt="Config_8_1"></p>
+<p><img src="/img/pfsense/Config_dhcp/Config_8_2.png" alt="Config_8_2"></p>
+<p>Asi es como tendría que quedar el conjunto de reglas.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_9.png" alt="Config_9"></p>
+<h3 id="configuración-del-alisas">Configuración del Alisas</h3>
+<p>Pfsense ofrece la posibilidad de crear grupos de ips puertos y url para usar en las reglas del firewall.</p>
+<p>Crearemos un grupo de puertos que usaremos mas tarde de la siguiente firma.</p>
+<p>Iremos a Firewall/Aliases.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_10.png" alt="Config_10"></p>
+<p>Añadiremos los puertos necesarios para salir a internet y pulsaremos guardad.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_11.png" alt="Config_11"></p>
+<h3 id="configurar-firewall-para-salir-a-internet">Configurar firewall para salir a internet.</h3>
+<p>Crearemos una nueva regla en la red externa de la siguiente forma.</p>
+<p>Entraremos en Firewall / rules y pulsaremos añadir.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_12_1.png" alt="Config_12_1"></p>
+<p>Aquí la inteface que seleccionaremos sera externa, la familia sera ipv 4 y el protocolo sera tanto udp como tcp, en source dejaremos externa net.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_12_2.png" alt="Config_12_2"></p>
+<p>Por ultimo en destinatión port escribiremos <em>Internet</em> que es el alias que creamos en el apartado anterior.</p>
+<p>Para finalizar haremos lo mismo para la red interna.</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_13_1.png" alt="Config_13_1"></p>
+<p><img src="/img/pfsense/Config_dhcp/Config_13_2.png" alt="Config_13_2"></p>
+<p>Asi es como tendría que quedar</p>
+<p><img src="/img/pfsense/Config_dhcp/Config_14_1.png" alt="Config_14_1"></p>
+<p><img src="/img/pfsense/Config_dhcp/Config_14_2.png" alt="Config_14_2"></p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="http://localhost:1313/tags/example/">example</a>&nbsp;
+            
+              
+              <a href="http://localhost:1313/tags/markdown/">markdown</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f&amp;text=pfsense-alta-disponibilidad&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f&amp;title=pfsense-alta-disponibilidad" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f&amp;title=pfsense-alta-disponibilidad" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f&amp;title=pfsense-alta-disponibilidad" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=http%3a%2f%2flocalhost%3a1313%2fpost%2f2025-03-01-pfsense-alta-disponivilidad%2f&amp;description=pfsense-alta-disponibilidad" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="https://github.com/jose20035" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://www.linkedin.com/in/jose-miguel-calderon-frutos/" title="LinkedIn">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              José Miguel Calderón Frutos
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://localhost:1313/">El blog de un mero informático</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.3</a> alimentada &nbsp;&bull;&nbsp; Tema <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adaptado de <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="http://localhost:1313/js/main.js"></script>
+<script src="http://localhost:1313/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="http://localhost:1313/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
