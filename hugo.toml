@@ -1,4 +1,4 @@
-baseurl = "https://jose20035.github.io/Myblog"
+baseurl = "https://jose20035.github.io/"
 DefaultContentLanguage = "es"
 title = "El blog de un mero informático"
 # Using theme as git submodule
@@ -17,6 +17,10 @@ pygmentsCodefencesGuessSyntax = true
     # Shortname = "XXX"
   [Services.googleAnalytics]
     # id = "XXX"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
 
 [Params]
 #  homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
