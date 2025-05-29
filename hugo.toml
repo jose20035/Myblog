@@ -1,4 +1,4 @@
-baseurl = "https://jose20035.github.io/"
+baseurl = "https://jose20035.github.io/Myblog"
 DefaultContentLanguage = "es"
 title = "El blog de un mero informático"
 # Using theme as git submodule
