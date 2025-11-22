@@ -1,5 +1,5 @@
 ---
-title: About me
+title: Sobre mí
 subtitle: ¿Quién soy y que experiencia tengo?
 comments: false
 ---
